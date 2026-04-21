@@ -39,9 +39,6 @@ Langkah 5: Input dan Selection Widget
 Langkah 6: Date and Time Pickers
 ![Flutter Demo Home Page](assets/screenshots/time-picker.png)
 
-## Screenshot Aplikasi
-
-### Aplikasi Demo Flutter
 
 
 
