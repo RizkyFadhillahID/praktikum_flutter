@@ -10,6 +10,8 @@ import '10-dasar-state-management/views/plan_creator_screen.dart' as w10_views;
 import '10-dasar-state-management/models/data_layer.dart' as w10_models;
 import '11-pemograman-asynchronous/main.dart' as w11;
 import '12-stream/main.dart' as w12;
+import '13-persistensi-data/main.dart' as w13;
+
 
 void main() {
   runApp(const MyApp());
@@ -286,6 +288,24 @@ class RootDashboard extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const w12.StreamDashboard(),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Week 13 Card
+                  _buildDashboardCard(
+                    context,
+                    title: 'Praktikum 13: Persistensi Data',
+                    description: 'Menyimpan data lokal menggunakan SharedPreferences, file teks lokal, dan database/secure storage terenkripsi.',
+                    icon: Icons.save_outlined,
+                    gradientColors: [const Color(0xFF3F51B5), const Color(0xFF7986CB)],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const w13.PersistDashboard(),
                         ),
                       );
                     },
