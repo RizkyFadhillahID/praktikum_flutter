@@ -11,7 +11,7 @@ import '10-dasar-state-management/models/data_layer.dart' as w10_models;
 import '11-pemograman-asynchronous/main.dart' as w11;
 import '12-stream/main.dart' as w12;
 import '13-persistensi-data/main.dart' as w13;
-
+import '14-restfull-api/main.dart' as w14;
 
 void main() {
   runApp(const MyApp());
@@ -67,7 +67,10 @@ class RootDashboard extends StatelessWidget {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 16.0,
+              ),
               title: Text(
                 'Praktikum Mobile',
                 style: TextStyle(
@@ -136,10 +139,7 @@ class RootDashboard extends StatelessWidget {
                           Divider(color: Colors.white54, height: 24),
                           Text(
                             'Teknik Informatika - UNDIRA',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: whiteE6,
-                            ),
+                            style: TextStyle(fontSize: 14, color: whiteE6),
                           ),
                         ],
                       ),
@@ -153,14 +153,18 @@ class RootDashboard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Week 5 Card
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 5: Widget Dasar',
-                    description: 'Menerapkan widget dasar Material Design dan Cupertino (Scaffold, Dialog, Input, Date Time Pickers).',
+                    description:
+                        'Menerapkan widget dasar Material Design dan Cupertino (Scaffold, Dialog, Input, Date Time Pickers).',
                     icon: Icons.widgets_outlined,
-                    gradientColors: [const Color(0xFFF44336), const Color(0xFFFF7961)],
+                    gradientColors: [
+                      const Color(0xFFF44336),
+                      const Color(0xFFFF7961),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -176,14 +180,19 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 6: Layout & Navigasi',
-                    description: 'Mengembangkan layout antarmuka dinamis dan navigasi rute halaman pada Flutter.',
+                    description:
+                        'Mengembangkan layout antarmuka dinamis dan navigasi rute halaman pada Flutter.',
                     icon: Icons.map_outlined,
-                    gradientColors: [const Color(0xFF2196F3), const Color(0xFF6EC6FF)],
+                    gradientColors: [
+                      const Color(0xFF2196F3),
+                      const Color(0xFF6EC6FF),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const w6.LayoutNavigasiDashboard(),
+                          builder: (context) =>
+                              const w6.LayoutNavigasiDashboard(),
                         ),
                       );
                     },
@@ -194,9 +203,13 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 7: Manajemen Plugin',
-                    description: 'Mengintegrasikan auto_size_text dari pub.dev untuk auto-resizing teks secara responsif.',
+                    description:
+                        'Mengintegrasikan auto_size_text dari pub.dev untuk auto-resizing teks secara responsif.',
                     icon: Icons.extension_outlined,
-                    gradientColors: [const Color(0xFF4CAF50), const Color(0xFF80E27E)],
+                    gradientColors: [
+                      const Color(0xFF4CAF50),
+                      const Color(0xFF80E27E),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -214,9 +227,13 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 9: Kamera & Filter',
-                    description: 'Mengakses sensor kamera perangkat, mengambil foto, dan menerapkan carousel filter warna secara langsung.',
+                    description:
+                        'Mengakses sensor kamera perangkat, mengambil foto, dan menerapkan carousel filter warna secara langsung.',
                     icon: Icons.camera_alt_outlined,
-                    gradientColors: [const Color(0xFFFF9800), const Color(0xFFFFC947)],
+                    gradientColors: [
+                      const Color(0xFFFF9800),
+                      const Color(0xFFFFC947),
+                    ],
                     onTap: () async {
                       try {
                         final cameras = await availableCameras();
@@ -225,12 +242,15 @@ class RootDashboard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => w9.TakePictureScreen(camera: firstCamera),
+                            builder: (context) =>
+                                w9.TakePictureScreen(camera: firstCamera),
                           ),
                         );
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error inisialisasi kamera: $e')),
+                          SnackBar(
+                            content: Text('Error inisialisasi kamera: $e'),
+                          ),
                         );
                       }
                     },
@@ -241,15 +261,21 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 10: State Management',
-                    description: 'Mengelola state aplikasi secara reaktif menggunakan InheritedNotifier, ValueNotifier, dan penanganan multi-screen.',
+                    description:
+                        'Mengelola state aplikasi secara reaktif menggunakan InheritedNotifier, ValueNotifier, dan penanganan multi-screen.',
                     icon: Icons.layers_outlined,
-                    gradientColors: [const Color(0xFF9C27B0), const Color(0xFFE040FB)],
+                    gradientColors: [
+                      const Color(0xFF9C27B0),
+                      const Color(0xFFE040FB),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => w10_provider.PlanProvider(
-                            notifier: ValueNotifier<List<w10_models.Plan>>(const []),
+                            notifier: ValueNotifier<List<w10_models.Plan>>(
+                              const [],
+                            ),
                             child: const w10_views.PlanCreatorScreen(),
                           ),
                         ),
@@ -262,9 +288,13 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 11: Pemrograman Asynchronous',
-                    description: 'Eksplorasi pemrograman asynchronous di Flutter: Futures, Completer, FutureBuilder, navigasi Route async, dan Widget Dialog.',
+                    description:
+                        'Eksplorasi pemrograman asynchronous di Flutter: Futures, Completer, FutureBuilder, navigasi Route async, dan Widget Dialog.',
                     icon: Icons.sync_alt,
-                    gradientColors: [const Color(0xFF673AB7), const Color(0xFF9575CD)],
+                    gradientColors: [
+                      const Color(0xFF673AB7),
+                      const Color(0xFF9575CD),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -280,9 +310,13 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 12: State & Streams & BLoC',
-                    description: 'Eksplorasi lanjutan pemrograman asynchronous & state management: Dart Streams, StreamControllers, StreamBuilders, dan pola arsitektur BLoC.',
+                    description:
+                        'Eksplorasi lanjutan pemrograman asynchronous & state management: Dart Streams, StreamControllers, StreamBuilders, dan pola arsitektur BLoC.',
                     icon: Icons.waves,
-                    gradientColors: [const Color(0xFFE91E63), const Color(0xFFFF8A80)],
+                    gradientColors: [
+                      const Color(0xFFE91E63),
+                      const Color(0xFFFF8A80),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -298,9 +332,13 @@ class RootDashboard extends StatelessWidget {
                   _buildDashboardCard(
                     context,
                     title: 'Praktikum 13: Persistensi Data',
-                    description: 'Menyimpan data lokal menggunakan SharedPreferences, file teks lokal, dan database/secure storage terenkripsi.',
+                    description:
+                        'Menyimpan data lokal menggunakan SharedPreferences, file teks lokal, dan database/secure storage terenkripsi.',
                     icon: Icons.save_outlined,
-                    gradientColors: [const Color(0xFF3F51B5), const Color(0xFF7986CB)],
+                    gradientColors: [
+                      const Color(0xFF3F51B5),
+                      const Color(0xFF7986CB),
+                    ],
                     onTap: () {
                       Navigator.push(
                         context,
@@ -310,10 +348,31 @@ class RootDashboard extends StatelessWidget {
                       );
                     },
                   ),
+
+                  // Week 14 Card
+                  _buildDashboardCard(
+                    context,
+                    title: 'Praktikum 14: RESTful API',
+                    description:
+                        'Mampu menerapkan komunikasi internet menggunakan restfull api.',
+                    icon: Icons.save_outlined,
+                    gradientColors: [
+                      const Color(0xFF3F51B5),
+                      const Color(0xFF7986CB),
+                    ],
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const w14.PersistDashboard(),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -328,7 +387,7 @@ class RootDashboard extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     final theme = Theme.of(context);
-    
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -345,7 +404,7 @@ class RootDashboard extends StatelessWidget {
               color: Colors.black.withOpacity(0.04),
               blurRadius: 10,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Padding(

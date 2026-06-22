@@ -20,163 +20,57 @@ class _JsonScreenState extends State<JsonScreen> {
     readJsonFile();
   }
 
-  Future<List<Pizza>> readJsonFile() async {
+  Future<void> readJsonFile() async {
     try {
-      // Simulate slight delay for rich UX loading state
-      await Future.delayed(const Duration(milliseconds: 600));
-      
       String myString = await rootBundle.loadString('assets/pizzalist.json');
+
       List<dynamic> pizzaMapList = jsonDecode(myString);
-      
-      List<Pizza> pizzas = pizzaMapList.map((map) => Pizza.fromJson(map)).toList();
-      
-      // Serialize to JSON and print to debug console
-      String jsonOutput = convertToJSON(pizzas);
-      debugPrint('--- Serialized Pizza List JSON ---');
-      debugPrint(jsonOutput);
-      
+
+      List<Pizza> pizzas = pizzaMapList
+          .map((map) => Pizza.fromJson(map))
+          .toList();
+      String output = jsonEncode(pizzas.map((p) => p.toJson()).toList());
+
       setState(() {
         myPizzas = pizzas;
+
         isLoading = false;
       });
-      return pizzas;
     } catch (e) {
-      debugPrint('Error reading JSON: $e');
+      debugPrint('Error: $e');
       setState(() {
         isLoading = false;
       });
-      return [];
     }
-  }
-
-  String convertToJSON(List<Pizza> pizzas) {
-    return jsonEncode(pizzas.map((p) => p.toJson()).toList());
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JSON Parsing - 411253001'),
-        centerTitle: true,
-        backgroundColor: theme.colorScheme.primaryContainer,
+        title: const Text('JSON Parsing'),
+        backgroundColor: Colors.blueGrey,
       ),
       body: isLoading
-          ? const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Loading Pizza List...', style: TextStyle(fontStyle: FontStyle.italic)),
-                ],
-              ),
-            )
-          : myPizzas.isEmpty
-              ? const Center(child: Text('No pizzas found.'))
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Expanded(
                   child: ListView.builder(
                     itemCount: myPizzas.length,
                     itemBuilder: (context, index) {
                       final pizza = myPizzas[index];
-                      return Card(
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            gradient: LinearGradient(
-                              colors: [
-                                theme.colorScheme.surface,
-                                theme.colorScheme.surfaceVariant.withOpacity(0.3),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(12),
-                            leading: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.primary.withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.local_pizza,
-                                size: 36,
-                                color: theme.colorScheme.primary,
-                              ),
-                            ),
-                            title: Text(
-                              pizza.pizzaName.isEmpty ? 'No Name' : pizza.pizzaName,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 6.0),
-                              child: Text(
-                                pizza.description.isEmpty ? 'No Description' : pizza.description,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: theme.colorScheme.secondary.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    '\$${pizza.price.toStringAsFixed(2)}',
-                                    style: TextStyle(
-                                      color: theme.colorScheme.secondary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'ID: ${pizza.id}',
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      return ListTile(
+                        leading: const Icon(Icons.local_pizza),
+                        title: Text(pizza.pizzaName),
+                        subtitle: Text(pizza.description),
+                        trailing: Text('\$${pizza.price.toStringAsFixed(2)}'),
                       );
                     },
                   ),
                 ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          final json = convertToJSON(myPizzas);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('JSON printed to debug console! String length: ${json.length}'),
-              duration: const Duration(seconds: 2),
+              ],
             ),
-          );
-          debugPrint('--- Forced Serialized JSON ---');
-          debugPrint(json);
-        },
-        label: const Text('Print JSON'),
-        icon: const Icon(Icons.print),
-      ),
     );
   }
 }

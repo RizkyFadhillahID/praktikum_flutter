@@ -33,7 +33,6 @@ class _FilesystemScreenState extends State<FilesystemScreen> {
         myFile = File('$documentsPath/myFile.txt');
       });
 
-      // Write the requested personalized student text
       await writeFile();
 
       setState(() {
@@ -49,7 +48,6 @@ class _FilesystemScreenState extends State<FilesystemScreen> {
 
   Future<bool> writeFile() async {
     try {
-      // Customized text format: Name - NIM
       await myFile.writeAsString('Rizky Fadhillah - 411253001');
       return true;
     } catch (e) {
